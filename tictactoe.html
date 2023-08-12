@@ -396,6 +396,68 @@ public String getWinner() {
     </p>
 </section>
 
+        <!-- Within the <main> section of tictactoe.html -->
+
+<section>
+    <h2>Preventing Moves After Game is Over</h2>
+    <p>
+        In this section, we'll ensure that the game enforces the rule that no moves can be made after the game is over. We'll write a test to confirm that attempting to make a move after a player has won the game results in an exception being thrown.
+    </p>
+
+    <h3>Writing the Test</h3>
+    <p>
+        Let's create a test that checks whether the game throws an <code>IllegalMoveException</code> when a move is attempted after the game has already been won.
+    </p>
+
+    <pre><code class="language-java">
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class GameBrainTests {
+    // ... Previous tests ...
+
+    @Test
+    void whenGameIsOverAndTryingToMakeAMoveThenShouldThrowAnException() {
+        // ... Previous game setup ...
+        IllegalMoveException illegalMoveException = assertThrows(IllegalMoveException.class, () -> game.playMove(3));
+        assertThat(illegalMoveException.getMessage(), is("Cannot make a move. Game is already over. Winner: X"));
+    }
+}
+    </code></pre>
+
+    <h3>Implementing the Functionality</h3>
+    <p>
+        To prevent moves after the game is over, we'll need to introduce a flag that tracks the game's state. Once the game is won, we'll mark it as over and disallow further moves.
+    </p>
+
+    <details>
+        <summary>Click to view the provided implementation</summary>
+        <pre><code class="language-java">
+private void validateMove(int cell) {
+    if (getWinner() != null) {
+        throw new IllegalMoveException(String.format("Cannot make a move. Game is already over. Winner: %s", getWinner()));
+    }
+    if (cell < 0) {
+        throw new IllegalMoveException(String.format("Invalid move. Target cell cannot be negative: %s", cell));
+    }
+    if (cell > 9) {
+        throw new IllegalMoveException(String.format("Invalid move. Cell %s is out of bounds.", cell));
+    }
+    if (!boardState.get(cell).equals(EMPTY_CELL)) {
+        throw new IllegalMoveException("Invalid move. Cell is not empty.");
+    }
+}
+        </code></pre>
+    </details>
+
+    <p>
+        With the final test for preventing moves after the game is over in place, our game's logic is now fully equipped to provide an enjoyable and rule-compliant gaming experience through Test-Driven Development!
+    </p>
+</section>
+
+
 
         <!-- Other sections of the tutorial will go here -->
         <!-- You can add each section with explanations and code snippets -->
