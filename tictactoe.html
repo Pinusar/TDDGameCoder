@@ -320,6 +320,81 @@ public void playMove(int cell) {
     </p>
 </section>
 
+<!-- Within the <main> section of tictactoe.html -->
+
+<section>
+    <h2>Determining the Winner</h2>
+    <p>
+        In this section, we'll focus on the exciting moment when a player wins the game by getting three in a row. We'll write a test to ensure that the game correctly determines the winner when a player achieves this milestone.
+    </p>
+
+    <h3>Writing the Test</h3>
+    <p>
+        Let's create a test that checks whether the game correctly identifies the winner when a player has three in a row.
+    </p>
+
+    <pre><code class="language-java">
+import org.junit.jupiter.api.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class GameBrainTests {
+    // ... Previous tests ...
+
+    @Test
+    void whenPlayerHasThreeInARowThenGameShouldBeOver() {
+        Game game = new Game();
+
+        game.playMove(0);
+        game.playMove(5);
+        game.playMove(1);
+        game.playMove(6);
+        game.playMove(2);
+
+        assertThat(game.getWinner(), is("X"));
+    }
+}
+    </code></pre>
+
+    <h3>Implementing the Functionality</h3>
+    <p>
+        Now, let's implement the functionality to determine the winner of the game. We'll enhance the <code>Game</code> class to check for a winning combination after each move and return the winning player if applicable.
+    </p>
+
+    <details>
+        <summary>Click to view the provided implementation</summary>
+        <pre><code class="language-java">
+public String getWinner() {
+    List<List<Integer>> winningCombinations = List.of(
+        List.of(0, 1, 2),
+        List.of(3, 4, 5),
+        List.of(6, 7, 8),
+        List.of(0, 3, 6),
+        List.of(1, 4, 7),
+        List.of(2, 5, 8),
+        List.of(0, 4, 8),
+        List.of(2, 4, 6)
+    );
+    String winner = null;
+    for (List<Integer> combination : winningCombinations) {
+        List<String> players = List.of(X, O);
+        for (String player : players) {
+            if (combination.stream().allMatch(i ->
+                    getCell(i).equals(player))) {
+                winner = player;
+                break;
+            }
+        }
+    }
+    return winner;
+}
+        </code></pre>
+    </details>
+
+    <p>
+        With the test for determining the winner in place, our game's logic is nearing completion as we progress through Test-Driven Development!
+    </p>
+</section>
 
 
         <!-- Other sections of the tutorial will go here -->
