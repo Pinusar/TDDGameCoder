@@ -31,6 +31,93 @@
             </p>
         </section>
 
+        <!-- Within the <main> section of tictactoe.html -->
+
+<section>
+    <h2>Playing the First Move</h2>
+    <p>
+        In this section, we'll begin our journey by writing our very first test. We'll focus on allowing players to make the first move and placing "X" in the chosen cell. Let's dive into the process of writing a test and making it pass!
+    </p>
+
+    <h3>Writing the First Test</h3>
+    <p>
+        The first step is to create a test that checks whether players can place an "X" in the chosen cell when making the first move.
+    </p>
+
+    <pre><code class="language-java">
+import org.junit.jupiter.api.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
+public class GameBrainTests {
+    @Test
+    void whenPlayingFirstMoveThenXAppearsToTheCell() {
+        Game game = new Game();
+
+        game.playMove(0);
+
+        assertThat(game.getCell(0), equalTo("X"));
+    }
+}
+    </code></pre>
+
+    <h3>Implementing the Functionality</h3>
+    <p>
+        Now that we have our test in place, let's implement the functionality to make the test pass. We'll introduce the "Game" class and the necessary methods to allow players to place their moves.
+    </p>
+
+    <h3>Implementing the Functionality</h3>
+    <p>
+        Now that we have our test in place, it's time for a challenge! Go ahead and try to implement the functionality yourself to make the test pass. You can use the provided test as a guide, and feel free to experiment with your code.
+    </p>
+
+    <p>
+        Your task is to create the <code>Game</code> class with the necessary methods to allow players to place their moves and check the cells. Use your programming skills to make the test pass and see "X" appear in the chosen cell.
+    </p>
+
+    <p>
+        Remember, Test-Driven Development encourages an iterative process of writing tests, implementing code, and refining. Don't hesitate to experiment and iterate until your test passes successfully!
+    </p>
+
+    <p>
+        Once you've given it a try, you can compare your solution with the provided implementation below.
+    </p>
+
+<details>
+        <summary>Click to view the provided implementation</summary>
+        <pre><code class="language-java">
+import java.util.ArrayList;
+import java.util.List;
+
+public class Game {
+    private final List<String> boardState;
+    private String activePlayer = "X";
+
+    public Game() {
+        this.boardState = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            boardState.add(" ");
+        }
+    }
+
+    public void playMove(int cell) {
+        boardState.set(cell, activePlayer);
+    }
+
+    public String getCell(int cell) {
+        return boardState.get(cell);
+    }
+}
+        </code></pre>
+    </details>
+
+    <p>
+        With the test successfully passing, we've taken our first step towards building our Tic-Tac-Toe game using Test-Driven Development!
+    </p>
+</section>
+
+
         <!-- Other sections of the tutorial will go here -->
         <!-- You can add each section with explanations and code snippets -->
     </main>
