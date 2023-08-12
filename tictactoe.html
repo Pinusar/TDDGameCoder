@@ -262,6 +262,65 @@ public void playMove(int cell) {
         </p>
     </section>
 
+        <!-- Within the <main> section of tictactoe.html -->
+
+<section>
+    <h2>Preventing Out of Bounds Moves</h2>
+    <p>
+        In this section, we'll address the scenario where players attempt to make a move to a cell that is outside the bounds of the game board. We'll write a test to ensure that attempting such a move results in an exception being thrown.
+    </p>
+
+    <h3>Writing the Test</h3>
+    <p>
+        Let's create a test that checks whether attempting to make a move to a cell outside the bounds of the board throws an <code>IllegalMoveException</code>.
+    </p>
+
+    <pre><code class="language-java">
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class GameBrainTests {
+    // ... Previous tests ...
+
+    @Test
+    void whenTryingToMakeMoveToCellBiggerThanBoardShouldThrowException() {
+        Game game = new Game();
+
+        IllegalMoveException illegalMoveException = assertThrows(IllegalMoveException.class, () -> game.playMove(10));
+        assertThat(illegalMoveException.getMessage(), is("Invalid move. Cell 10 is out of bounds."));
+    }
+}
+    </code></pre>
+
+    <h3>Implementing the Functionality</h3>
+    <p>
+        Now, let's implement the functionality to prevent players from making moves to cells that are out of bounds. We'll enhance the <code>Game</code> class to check whether the cell index is valid before allowing a move to be played.
+    </p>
+
+    <details>
+        <summary>Click to view the provided implementation</summary>
+        <pre><code class="language-java">
+public void playMove(int cell) {
+    if (cell > 9) {
+        throw new IllegalMoveException(String.format("Invalid move. Cell %s is out of bounds.", cell));
+    }
+    if (!boardState.get(cell).equals(" ")) {
+        throw new IllegalMoveException("Invalid move. Cell is not empty.");
+    }
+    boardState.set(cell, activePlayer);
+    activePlayer = activePlayer.equals("X") ? "O" : "X";
+}
+        </code></pre>
+    </details>
+
+    <p>
+        With the test for preventing out of bounds moves in place, our game's logic becomes even more robust as we continue the Test-Driven Development process!
+    </p>
+</section>
+
+
 
         <!-- Other sections of the tutorial will go here -->
         <!-- You can add each section with explanations and code snippets -->
