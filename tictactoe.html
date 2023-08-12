@@ -188,6 +188,80 @@ public class Game {
         </p>
     </section>
 
+    <section>
+        <h2>Preventing Duplicate Moves</h2>
+        <p>
+            In this section, we'll tackle the challenge of preventing players from making two moves on the same cell in our Tic-Tac-Toe game. We'll write a test to ensure that attempting to make a move on an occupied cell results in an exception being thrown.
+        </p>
+
+        <h3>Writing the Test</h3>
+        <p>
+            Let's create a test that checks whether attempting to make a move on an occupied cell throws a <code>GameLogicException</code>.
+        </p>
+
+        <pre><code class="language-java">
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public class GameBrainTests {
+    // ... Previous tests ...
+
+    @Test
+    void whenTryingToMakeMoveToAnOccupiedCellShouldThrowException() {
+        Game game = new Game();
+
+        game.playMove(0);
+
+        assertThrows(GameLogicException.class, () -> game.playMove(0));
+    }
+}
+    </code></pre>
+
+        <h3>Implementing the Functionality</h3>
+        <p>
+            Now, let's implement the functionality to prevent players from making moves on occupied cells. We'll enhance the <code>Game</code> class to check whether the cell is already occupied before allowing a move to be played.
+        </p>
+        <p>
+            Go ahead and try to implement the
+            functionality yourself to make the test pass. You can use the provided test as a guide, and feel free to
+            experiment with your code.
+        </p>
+
+        <details>
+            <summary>Click to view the provided implementation</summary>
+            First, let's create a new exception type in a separate file.
+            <pre><code class="language-java">
+package TicTacToe;
+
+public class IllegalMoveException extends RuntimeException {
+    public IllegalMoveException() {
+        super();
+    }
+
+    public IllegalMoveException(String message) {
+        super(message);
+    }
+}
+        </code></pre>
+            Then, in the playMove() method of the Game class, let's start using it.
+        <pre><code class="language-java">
+public void playMove(int cell) {
+        if (!boardState.get(cell).equals(" ")) {
+            throw new IllegalMoveException("Invalid move. Cell is not empty.");
+        }
+        boardState.set(cell, activePlayer);
+        activePlayer = activePlayer.equals("X") ? "O" : "X";
+    }
+        </code></pre>
+        </details>
+
+        <!-- ... Implementation code goes here ... -->
+
+        <p>
+            With the test for preventing duplicate moves in place, we're adding more depth to our game's logic through Test-Driven Development!
+        </p>
+    </section>
+
 
         <!-- Other sections of the tutorial will go here -->
         <!-- You can add each section with explanations and code snippets -->
