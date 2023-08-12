@@ -112,6 +112,82 @@ public class Game {
     </p>
 </section>
 
+        <section>
+        <h2>Switching Active Player</h2>
+        <p>
+            In this section, we'll explore the process of switching the active player when making moves in our
+            Tic-Tac-Toe game. We'll write a test to ensure that the active player changes from "X" to "O" after the
+            first move is made.
+        </p>
+
+        <h3>Writing the Test</h3>
+        <p>
+            Let's create a test that checks whether the active player switches to "O" after the second move is played.
+        </p>
+
+        <pre><code class="language-java">
+import org.junit.jupiter.api.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
+public class GameBrainTests {
+    // ... Previous tests ...
+
+    @Test
+    void whenPlayingSecondMoveThenOAppearsToTheCell() {
+        Game game = new Game();
+
+        game.playMove(0);
+        game.playMove(1);
+
+        assertThat(game.getCell(1), equalTo("O"));
+    }
+}
+    </code></pre>
+
+        <h3>Implementing the Functionality</h3>
+        <p>
+            Now that we have our test in place, it's time for another challenge! Go ahead and try to implement the
+            functionality yourself to make the test pass. You can use the provided test as a guide, and feel free to
+            experiment with your code.
+        </p>
+
+        <details>
+            <summary>Click to view the provided implementation</summary>
+            <pre><code class="language-java">
+import java.util.ArrayList;
+import java.util.List;
+
+public class Game {
+    private final List<String> boardState;
+    private String activePlayer = "X";
+
+    public Game() {
+        this.boardState = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            boardState.add(" ");
+        }
+    }
+
+    public void playMove(int cell) {
+        boardState.set(cell, activePlayer);
+        activePlayer = activePlayer.equals("X") ? "O" : "X";
+    }
+
+    public String getCell(int cell) {
+        return boardState.get(cell);
+    }
+}
+
+        </code></pre>
+        </details>
+
+        <p>
+            With the test for switching the active player passing, our game is becoming more dynamic as we progress
+            through Test-Driven Development!
+        </p>
+    </section>
+
 
         <!-- Other sections of the tutorial will go here -->
         <!-- You can add each section with explanations and code snippets -->
